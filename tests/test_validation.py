@@ -10,7 +10,6 @@ def test_validate_nulls_in_required(sample_input_data_validation):
         .to_frame()
         .T
     )
-
     assert validated_data is None
     assert error is not None
 

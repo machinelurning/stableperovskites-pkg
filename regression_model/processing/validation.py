@@ -68,7 +68,7 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
 
     except ValueError as error:
         validated_data = None
-        errors = error
+        errors = str(error)
 
     return validated_data, errors
 
