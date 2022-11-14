@@ -18,31 +18,6 @@ def drop_na_inputs(*, input_data: pd.DataFrame) -> pd.DataFrame:
     """Check model inputs for na values and filter."""
     validated_data = input_data.copy()
 
-    if validated_data[config.model_config.no_nulls_allowed].isnull().values.any():
-        raise ValueError("Nulls present in required features.")
-
-    for a_site in config.model_config.a_site_cols:
-        elems = validated_data[a_site].dropna()
-
-        if not (elems.isin(config.model_config.a_site_elements)).min():
-            raise ValueError(
-                f"Some elements in {a_site} is not present in the Shannon radius directory."
-            )
-
-    for b_site in config.model_config.b_site_cols:
-        elems = validated_data[b_site].dropna()
-        if not (elems.isin(config.model_config.b_site_elements)).min():
-            raise ValueError(
-                f"Some elements in {b_site} is not present in the Shannon radius directory."
-            )
-
-    if (
-        not validated_data[config.model_config.composition]
-        .apply(check_stoichiometry)
-        .min()
-    ):
-        raise ValueError("Perovskite oxide is not stoichiometric.")
-
     validated_data = validated_data.fillna(0)
 
     return validated_data
@@ -54,6 +29,31 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
     relevant_data = input_data[config.model_config.input_features].copy()
 
     try:
+        if relevant_data[config.model_config.no_nulls_allowed].isnull().values.any():
+            raise ValueError("Nulls present in required features.")
+
+        for a_site in config.model_config.a_site_cols:
+            elems = relevant_data[a_site].dropna()
+
+            if not (elems.isin(config.model_config.a_site_elements)).min():
+                raise ValueError(
+                    f"Some elements in {a_site} is not present in the Shannon radius directory."
+                )
+
+        for b_site in config.model_config.b_site_cols:
+            elems = relevant_data[b_site].dropna()
+            if not (elems.isin(config.model_config.b_site_elements)).min():
+                raise ValueError(
+                    f"Some elements in {b_site} is not present in the Shannon radius directory."
+                )
+
+        if (
+            not relevant_data[config.model_config.composition]
+            .apply(check_stoichiometry)
+            .min()
+        ):
+            raise ValueError("Perovskite oxide is not stoichiometric.")
+
         validated_data = drop_na_inputs(input_data=relevant_data)
         errors = None
 
@@ -61,8 +61,14 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
         MultiplePerovskiteOxideSchema(
             inputs=validated_data.replace({np.nan: None}).to_dict(orient="records")
         )
+
     except ValidationError as error:
+        validated_data = None
         errors = error.json()
+
+    except ValueError as error:
+        validated_data = None
+        errors = error
 
     return validated_data, errors
 
