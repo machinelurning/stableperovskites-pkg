@@ -14,7 +14,7 @@ def make_prediction(
 ) -> dict:
     """Make a prediction using a saved model pipeline."""
 
-    pipeline_file_name = f"{config.app_config.pipeline_save_file}{_version}.pkl"
+    pipeline_file_name = f"{config.app_config.pipeline_save_file}.pkl"
     formation_energy_pipe = load_pipeline(file_name=pipeline_file_name)
 
     data = pd.DataFrame(input_data)
