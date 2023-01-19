@@ -9,8 +9,8 @@ from regression_model.processing.features import (
     PopulateElementalProp,
     NumOfSites,
     PopulateMajorityIonProperties,
-    ReplaceBlank,
     ShannonRadius,
+    ReplaceBlank,
 )
 
 elemental_properties = load_dataset(file_name=config.app_config.elemental_prop)
