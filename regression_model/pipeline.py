@@ -6,8 +6,8 @@ from regression_model.processing.data_manager import load_dataset
 from regression_model.processing.features import (
     CompositionAveragedProperties,
     KeepDesiredFeatures,
-    NumOfSites,
     PopulateElementalProp,
+    NumOfSites,
     PopulateMajorityIonProperties,
     ReplaceBlank,
     ShannonRadius,
