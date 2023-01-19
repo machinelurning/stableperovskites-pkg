@@ -4,8 +4,8 @@ from sklearn.pipeline import Pipeline
 from regression_model.config.core import config
 from regression_model.processing.data_manager import load_dataset
 from regression_model.processing.features import (
-    CompositionAveragedProperties,
     KeepDesiredFeatures,
+    CompositionAveragedProperties,
     PopulateElementalProp,
     NumOfSites,
     PopulateMajorityIonProperties,
