@@ -5,7 +5,7 @@ package_name: regression_model
 target: ENERGY_ABOVE_HULL
 
 pipeline_name: regression_model
-pipeline_save_file: regression_model_output_v
+pipeline_save_file: regression_model_output
 
 dft_calc_train: dft_calc_train.csv
 dft_calc_test: dft_calc_test.csv
