@@ -13,6 +13,7 @@ As a data scientist, my coding experience, as of a few months ago, have mostly b
 - Logging with loguru
 - Static typing with mypy
 - Data validation and settings management with pydantic
+- Publishing to PyPi
 - Automated building, testing, and deployment with GitHub Actions
 
 ## Usage
